@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
 * {
   padding: 0;
   margin: 0;
@@ -22,9 +23,8 @@ nav {
 
 img {
   width: 100%;
-  height: 100%;
-  min-height: 50vh;
-  padding: 20px;
+  height: auto;
+  display: block;
 }
 
 p {
@@ -66,6 +66,9 @@ button:active {
 }
 
 .btn {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
   background-color: #7342d6;
   color: white;
   padding: 12px 24px;
@@ -80,14 +83,6 @@ button:active {
 
 .logo {
   width: 100px;
-}
-
-ul {
-  display: flex;
-}
-
-li {
-  list-style: none;
 }
 
 .nav__link {
@@ -121,7 +116,7 @@ li {
 }
 
 .menu__backdrop {
-  position: absolute;
+  position: fixed;
   background-color: #242424;
   top: 0;
   bottom: 0;
@@ -132,7 +127,11 @@ li {
   align-items: center;
   justify-content: center;
   visibility: hidden;
-  transition: all 300ms ease;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease,
+    visibility 300ms;
+  overflow-y: auto;
   opacity: 0;
   transform: translate(100%);
 }
@@ -178,18 +177,19 @@ li {
 }
 
 header {
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
 }
 
 .header__container {
+  gap: 32px;
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  height: 100%;
+  min-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: top 24px;
+  padding: 24px;
 }
 
 .header__description {
@@ -237,10 +237,11 @@ h2 {
   background: url("assets/wave.svg");
   content: "";
   position: absolute;
-  width: 101vw;
+  width: 100%;
   height: 12vw;
   left: 0;
   z-index: 1;
+  pointer-events: none;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -259,7 +260,7 @@ h2 {
   display: flex;
 }
 
-.highlight {
+.highlights {
   padding: 0 24px;
   width: calc(100% / 3);
   display: flex;
@@ -267,6 +268,7 @@ h2 {
   justify-content: center;
   flex-direction: column;
 }
+
 .highlight__para {
   text-align: center;
   max-width: 280px;
@@ -287,40 +289,57 @@ h2 {
 
 .highlight__subtitle {
   font-size: 20px;
+
   margin-bottom: 16px;
+
   text-align: center;
 }
-/* 
 
-FEATURES 
+/*
+
+FEATURES
 
 */
 
 #features {
   padding-top: 8vw;
+
   background-color: rgba(115, 66, 214, 0.1);
 }
 
 .books {
   display: flex;
+
   flex-wrap: wrap;
 }
 
 .book {
   width: 25%;
+
   padding: 24px;
 }
 
 .book__img {
+  width: 100%;
+
+  height: 320px;
+
+  object-fit: contain;
+
   max-height: 380px;
+
   transition: all 300ms ease;
+
   cursor: not-allowed;
 }
 
 .book__img--wrapper {
   margin-bottom: 8px;
+
   border-radius: 4px;
+
   overflow: hidden;
+
   display: flex;
 }
 
@@ -330,26 +349,31 @@ FEATURES
 
 .book__title {
   font-size: 20px;
+
   margin-bottom: 8px;
 }
 
 .book__title:hover {
   text-decoration: underline;
+
   cursor: not-allowed;
 }
 
 .book__ratings {
   margin-bottom: 8px;
+
   color: #fabf2a;
 }
 
 .book__price--normal {
   text-decoration: line-through;
+
   padding-right: 6px;
+
   color: #bfbfbf;
 }
 
-/* 
+/*
 
 EXPLORE
 
@@ -359,7 +383,7 @@ EXPLORE
   background-color: rgba(115, 66, 214, 0.1);
 }
 
-/* 
+/*
 
 FOOTER
 
@@ -375,6 +399,7 @@ footer {
 
 .footer__logo--img {
   width: 160px;
+
   filter: grayscale(1) invert(1);
 }
 
@@ -392,6 +417,7 @@ footer {
 }
 
 /* SMALL PHONES, TABLETS, LARGE SMARTPHONES */
+
 @media (max-width: 768px) {
   .header__description {
     padding: 0 24px;
@@ -405,8 +431,20 @@ footer {
     font-size: 26px;
   }
 
-  button {
+  .btn {
     font-size: 18px;
+  }
+
+  .container {
+    padding: 48px 24px;
+  }
+
+  .highlights {
+    padding: 0 12px;
+  }
+
+  .book__img {
+    height: 280px;
   }
 
   .book {
@@ -415,6 +453,7 @@ footer {
 }
 
 /* SMALL PHONES, LARGE SMARTPHONES */
+
 @media (max-width: 550px) {
   .btn__menu {
     display: block;
@@ -424,11 +463,89 @@ footer {
     display: none;
   }
 
-  .highlight {
+  .highlights {
     width: 100%;
   }
 
-  .highlight:not(:last-child) {
+  .highlights:not(:last-child) {
     margin-bottom: 24px;
+  }
+}
+
+/* Shared column layout used by Explore, Contact, and the footer. */
+
+.row__column {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+}
+
+.btn:hover {
+  text-decoration: none;
+
+  background-color: #6033bb;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #7342d6;
+
+  outline-offset: 4px;
+}
+
+.menu__backdrop a:focus-visible,
+.menu__backdrop button:focus-visible,
+footer a:focus-visible {
+  outline-color: white;
+}
+
+@media (max-width: 550px) {
+  .highlight__wrapper {
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .header__description {
+    padding: 0;
+  }
+
+  .book {
+    padding: 16px 8px;
+
+    min-width: 0;
+  }
+
+  .book__img {
+    height: 220px;
+  }
+
+  .book__title {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 360px) {
+  .book {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .menu__backdrop,
+  .book__img {
+    transition: none;
   }
 }
